@@ -1,0 +1,67 @@
+<div class="account-container">
+    <app-sidebar class="sidebar"></app-sidebar>
+    
+    <div class="account-content">
+        <div class="image-container">
+            <img src="assets/photo.png" alt="User Photo" class="user-photo">
+        </div>
+
+        <div class="account-details">
+            <!-- Bouton de déconnexion -->
+            <button class="logout-btn" (click)="logout()"><i class="fas fa-power-off"></i></button>
+            
+            <!-- Affichage dynamique du nom et email -->
+            <h2 class="account-title">{{ userData.firstName }} {{ userData.lastName }}</h2>
+            <p class="account-email">{{ userData.email }}</p>
+            <p class="account-phone">{{ userData.phoneNumber }}</p>
+
+            <hr class="separator">
+
+            <div class="icons-container">
+                <button class="icon-btn"><i class="fas fa-user"></i></button>
+                <button class="icon-btn"><i class="fas fa-crown"></i></button>
+                <button class="icon-btn"><i class="fas fa-cog"></i></button>
+                <button class="icon-btn"><i class="fas fa-credit-card"></i></button>
+            </div>
+
+            <!-- Formulaire de modification -->
+            <div class="account-info">
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 1; margin-right: 24px;">
+                        <label>First Name</label>
+                        <input type="text" class="input-field" [(ngModel)]="userData.firstName">
+                    </div>
+                    <div style="flex: 1; margin-right: 24px;">
+                        <label>Last Name</label>
+                        <input type="text" class="input-field" [(ngModel)]="userData.lastName">
+                    </div>
+                </div>
+
+                <label>Mail</label>
+                <input type="email" class="input-field" [(ngModel)]="userData.email" disabled>
+
+                <label>Numéro de téléphone</label>
+                <input type="text" class="input-field" [(ngModel)]="userData.phoneNumber">
+
+                <label>Adresse</label>
+                <input type="text" class="input-field" [(ngModel)]="userData.address">
+
+                <label>Code Postal</label>
+                <input type="text" class="input-field" [(ngModel)]="userData.codePostal">
+
+                <label>Pays</label>
+                <input type="text" class="input-field" [(ngModel)]="userData.pays">
+            </div>
+
+            <!-- Bouton de sauvegarde -->
+            <!-- Bouton de sauvegarde -->
+<button class="save-btn" (click)="updateProfile()" [disabled]="loading">
+    <span *ngIf="!loading">SAVE</span>
+    <span *ngIf="loading">
+        <div class="spinner"></div> Saving...
+    </span>
+</button>
+
+        </div>
+    </div>
+</div>

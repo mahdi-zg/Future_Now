@@ -1,0 +1,75 @@
+<div class="register-container">
+    <div class="image-section">
+        <img src="../../../../assets/future-human.png" alt="AI Human Builder">
+    </div>
+
+    <div class="form-section">
+        <div class="form-wrapper">
+            <h2 class="register-title">Create Your Account</h2>
+
+            <form [formGroup]="signupForm" (ngSubmit)="register()">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Enter First Name" [disabled]="loading">
+                        <small class="text-danger" *ngIf="signupForm.controls['firstName'].invalid && signupForm.controls['firstName'].touched">
+                            First name is required
+                        </small>
+                    </div>
+                    <div class="col-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Enter Last Name" [disabled]="loading">
+                        <small class="text-danger" *ngIf="signupForm.controls['lastName'].invalid && signupForm.controls['lastName'].touched">
+                            Last name is required
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter Email" [disabled]="loading">
+                    <small class="text-danger" *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
+                        Please enter a valid email
+                    </small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter Password" [disabled]="loading">
+                    <small class="text-danger" *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+                        Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character
+                    </small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password" [disabled]="loading">
+                    <small class="text-danger" *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched">
+                        Passwords do not match
+                    </small>
+                    
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid || loading">
+                        <span *ngIf="!loading">Register</span>
+                        <span *ngIf="loading">
+                            <div class="spinner"></div> Creating...
+                        </span>
+                    </button>
+                </div>
+
+                <div class="text-danger" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+            </form>
+
+            <div class="separator">
+                <span>OR</span>
+            </div>
+            <div class="login-link">
+                <span>Already have an account? <a routerLink="/login">Login here</a></span>
+            </div>
+        </div>
+    </div>
+</div>

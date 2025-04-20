@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\MSI\\Desktop\\deploiement\\backend\\audios\\message_1.wav",
+    "duration": 4.34
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.03, "value": "X" },
+    { "start": 0.03, "end": 0.42, "value": "B" },
+    { "start": 0.42, "end": 0.70, "value": "F" },
+    { "start": 0.70, "end": 0.85, "value": "A" },
+    { "start": 0.85, "end": 0.92, "value": "E" },
+    { "start": 0.92, "end": 1.05, "value": "F" },
+    { "start": 1.05, "end": 1.12, "value": "B" },
+    { "start": 1.12, "end": 1.20, "value": "A" },
+    { "start": 1.20, "end": 1.36, "value": "C" },
+    { "start": 1.36, "end": 1.85, "value": "B" },
+    { "start": 1.85, "end": 1.92, "value": "C" },
+    { "start": 1.92, "end": 2.27, "value": "B" },
+    { "start": 2.27, "end": 2.34, "value": "C" },
+    { "start": 2.34, "end": 2.41, "value": "B" },
+    { "start": 2.41, "end": 2.55, "value": "E" },
+    { "start": 2.55, "end": 2.76, "value": "B" },
+    { "start": 2.76, "end": 2.89, "value": "A" },
+    { "start": 2.89, "end": 2.97, "value": "C" },
+    { "start": 2.97, "end": 3.18, "value": "B" },
+    { "start": 3.18, "end": 4.34, "value": "X" }
+  ]
+}

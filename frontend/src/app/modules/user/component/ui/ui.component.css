@@ -1,0 +1,477 @@
+/* ✅ Conteneur principal avec border-radius */
+.avatar-chat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 900px;
+    height: 650px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1e1e1e, #292929); /* Fond sombre */
+}
+
+/* ✅ Avatar */
+.avatar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.card-shortcuts {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    overflow-x: auto;
+    padding: 0 10px;
+  }
+  
+  .shortcut-card {
+    background: #ffffff10;
+    border-radius: 10px;
+    padding: 6px;
+    width: 80px;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+  }
+  
+  .shortcut-image {
+    width: 100%;
+    height: 60px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+  .left-cards {
+    position: absolute;
+    top: 100px;
+    left: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 20;
+  
+    /* ❌ supprimé car tu n’utilises plus de scroll automatique */
+    overflow: hidden;
+    height: auto; /* ou une hauteur fixe si tu veux */
+  }
+  
+  
+  .card-button {
+    width: 130px;
+    height: 130px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    animation: fadeInCard 0.6s ease-in-out;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .recording-indicator {
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+    margin-left: 8px;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+  
+  @keyframes fadeInCard {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideCard {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  
+  .card-image {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .card-button:hover .card-image img {
+    transform: scale(1.05); /* léger zoom au hover */
+  }
+  .card-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-content {
+    width: 100%;
+    height: 45%;
+    background-color: #fff;
+    padding: 5px 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 13px;
+    font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+  
+  
+  @keyframes slide-in {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+  }
+  .shortcut-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+/* ✅ Agrandir l'avatar */
+app-avatar {
+    display: block;
+    width: 115%;
+    height: 115%;
+    object-fit: cover;
+}
+
+/* ✅ Conteneur des messages */
+.conversation-container {
+    position: absolute;
+    bottom: 13%;
+    right: 2%;
+    width: 32%;
+    height: auto;
+    max-height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px;
+}
+
+/* ✅ Messages de l'utilisateur */
+.bg-user-message {
+    padding: 12px 16px;
+    border-radius: 16px;
+    align-self: flex-end;
+    max-width: 80%;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.bg-bot-message {
+    background-color: #ffffff; /* Fond noir */
+    color: #000000; /* Texte jaune */
+    padding: 12px 16px;
+    border-radius: 16px;
+    align-self: flex-start;
+    max-width: 80%;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ✅ Animation d’apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ✅ Effet de disparition des anciens messages */
+.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* ✅ Input et bouton bien alignés */
+.chat-box-overlay {
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ✅ Ajustement de l'input */
+.chat-input {
+    width: 180px; /* 🔹 Réduit légèrement la largeur */
+    height: 38px;
+    padding: 8px;
+    border-radius: 12px;
+    border: none;
+    background: white;
+    font-size: 13px;
+    color: #000;
+    box-shadow: 0 3px 10px #00000026;
+}
+
+/* ✅ Alignement correct des boutons */
+.chat-box-overlay {
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    display: flex;
+    gap: 8px; /* 🔹 Réduit l’espace entre les boutons */
+    align-items: center;
+}
+
+/* ✅ Ajustement du bouton d'envoi */
+.send-button {
+    background: #f8ff00; /* Jaune */
+    color: #000;
+    padding: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.send-button:hover {
+    transform: scale(1.1);
+    background: #dede00; /* Jaune plus foncé */
+}
+
+/* ✅ Bouton micro aligné après send-button */
+.mic-button {
+    background: #555; /* Gris foncé */
+    color: white;
+    padding: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.mic-button:hover {
+    transform: scale(1.1);
+    background: #777; /* Gris plus clair */
+}
+
+
+
+/* ✅ Animation pour faire disparaître le 1er message */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ✅ Animation pour faire disparaître les anciens messages */
+.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+/* ✅ Appliquer l'animation au message qui disparaît */
+.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+/* ✅ Animation d'apparition */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✅ Effet de surbrillance en jaune */
+@keyframes glowEffect {
+    0% { box-shadow: 0 0 5px rgba(255, 221, 0, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(255, 221, 0, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(255, 221, 0, 0.2); }
+}
+
+/* ✅ Boutons en haut à gauche */
+.top-left-controls {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ✅ Bouton Full Screen en haut à droite */
+.fullscreen-control {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 10;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ✅ Style des boutons */
+.control-btn {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid transparent;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+    font-size: 18px;
+}
+
+/* ✅ Effet hover avec surbrillance jaune */
+.control-btn:hover {
+    background: rgba(255, 221, 0, 0.2); /* Légère teinte jaune */
+    border-color: rgba(255, 221, 0, 0.8);
+    color: #ffdd00; /* Texte jaune */
+    animation: glowEffect 1.2s infinite alternate;
+}
+
+/* ✅ Animation au clic avec effet pop */
+.control-btn:active {
+    transform: scale(0.9);
+    background: rgba(255, 221, 0, 0.4);
+}
+
+/* ✅ Icône Mute en rouge quand activé */
+.muted {
+    color: red;
+}
+
+/* ✅ Effet "pop" à l'affichage */
+.fullscreen-btn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+.creating-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .creating-message {
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 12px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #ffdd00;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Animation spinner */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Animation fade */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
