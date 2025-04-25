@@ -13,13 +13,16 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# Copier le .jar compilé
 COPY --from=build /app/target/*.jar app.jar
 
-# Copier le binaire Rhubarb
+# Copier Rhubarb et le rendre exécutable
 COPY bin/rhubarb /app/bin/rhubarb
 RUN chmod +x /app/bin/rhubarb
 
 
 EXPOSE 8080
 
+# ✅ Point d’entrée unique avec le script d’attente
 ENTRYPOINT ["java", "-jar", "app.jar"]

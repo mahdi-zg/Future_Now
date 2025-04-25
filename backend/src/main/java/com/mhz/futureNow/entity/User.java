@@ -29,8 +29,6 @@ public class User implements UserDetails {
     private String address;
     private String codePostal;
     private String pays;
-    @OneToOne
-    private SystemApiKey systemApiKey;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

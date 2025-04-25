@@ -16,7 +16,6 @@ import java.util.Map;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
 
-    // 🔒 Liste blanche des domaines autorisés
     private static final List<String> allowedOrigins = Arrays.asList(
             "https://saasbuilder.future-now.ai"
     );
@@ -27,19 +26,20 @@ public class SimpleCorsFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-
         String originHeader = request.getHeader("Origin");
 
         if (originHeader != null && allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Origin", originHeader);
+            response.setHeader("Access-Control-Allow-Credentials", "true");
         }
 
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
+            response.flushBuffer(); // ✅ ajoute ça
         } else {
             chain.doFilter(req, res);
         }
@@ -51,3 +51,4 @@ public class SimpleCorsFilter implements Filter {
     @Override
     public void destroy() {}
 }
+
