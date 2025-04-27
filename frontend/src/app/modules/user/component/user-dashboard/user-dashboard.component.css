@@ -1,0 +1,1965 @@
+/* ✅ Conteneur principal */
+.user-dashboard {
+    display: flex;
+    height: 100vh;
+    background-color: black;
+}
+
+/* ✅ Sidebar collée à gauche */
+app-sidebar {
+    width: 80px;
+    min-width: 80px;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+
+/* ✅ Conteneur principal aligné au centre */
+.dashboard-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px; /* ✅ Espacement équilibré entre image et formulaire */
+}
+
+/* ✅ Partie centrale avec l’avatar */
+.dashboard-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ✅ Conteneur de l’avatar (agrandi et bien positionné) */
+.avatar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 804px; /* ✅ Image agrandie */
+    height: auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Image de l'avatar avec flou réduit */
+.avatar-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+
+/* ✅ Texte "Creation in Progress..." */
+.creation-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    animation: fadeInOut 1.5s infinite alternate;
+}
+
+/* ✅ Animation du texte */
+@keyframes fadeInOut {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* ✅ Partie droite avec le formulaire */
+.dashboard-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ✅ Conteneur du formulaire */
+.form-container {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    width: 460px; /* ✅ Ajustement pour équilibrer avec l’image */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Image sous "Step 1: Identity" */
+.identity-banner {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* ✅ En-tête du formulaire */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
+.form-header-left p {
+    margin: 0;
+    color: white;
+}
+
+/* ✅ Icônes et navigation */
+.form-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* ✅ Cercles agrandis */
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #666;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+}
+
+/* ✅ Icônes */
+.icon-circle i {
+    font-size: 18px;
+    color: black;
+}
+
+/* ✅ Effet hover : jaune personnalisé */
+.icon-circle:hover {
+    background: #f8ff00;
+    transform: scale(1.1);
+}
+
+/* ✅ Trait de séparation */
+.form-divider {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 10px 0;
+}
+
+/* ✅ Sections des formulaires */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+/* ✅ Mettre toutes les écritures en blanc */
+.form-section h2, label {
+    color: white;
+}
+
+/* ✅ Champs de formulaire */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 4px 0;
+    border: none;
+    border-radius: 21px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+}
+
+/* ✅ Ajustement du textarea */
+textarea {
+    resize: none;
+    overflow: hidden;
+    height: auto;
+    min-height: 99px;
+    max-height: 120px;
+}
+
+/* ✅ Boutons */
+.form-buttons {
+    display: flex;
+    justify-content: space-between; /* Back à gauche, Skip et Save and Next à droite */
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+.right-buttons {
+    display: flex;
+    justify-content: flex-end; /* Aligne Skip et Save and Next à droite */
+    gap: 10px;
+    flex-grow: 1; /* Permet aux boutons de rester à droite */
+}
+
+/* ✅ Boutons génériques (Back & Skip) */
+.back-btn, .skip-btn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #D9D9D9; /* Gris clair */
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+/* ✅ Effet au survol */
+.back-btn:hover, .skip-btn:hover {
+    background: #bbbbbb;
+    transform: scale(1.05);
+}
+/* ✅ Bouton Save and Next (Jaune) */
+.save-btn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #f8ff00; /* Jaune vif */
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ Effet au survol */
+.save-btn:hover {
+    background: #e5e600;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Animation au clic */
+.save-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Style du titre principal */
+.form-header-left {
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: white;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+/* ✅ Ajustement spécifique pour "FUTURE HUMAN" */
+.form-function {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+/* ✅ Style du texte "STEP 1: IDENTITY" */
+.section-title {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+/* ✅ Responsive Design pour Mobile */
+@media screen and (max-width: 768px) {
+    /* ✅ Ajuster la disposition pour mobile */
+    .user-dashboard {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+        padding: 10px;
+    }
+
+    /* ✅ Réduction du sidebar */
+    app-sidebar {
+        width: 100%;
+        min-width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    /* ✅ Avatar et Formulaire en colonne */
+    .dashboard-content {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* ✅ Avatar réduit */
+    .avatar-container {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    /* ✅ Formulaire ajusté */
+    .form-container {
+        width: 90%;
+        max-width: 400px;
+        padding: 15px;
+    }
+
+    /* ✅ Icônes rétrécies */
+    .icon-circle {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* ✅ Bouton adapté */
+    .save-btn {
+        width: 100%;
+    }
+}
+/* ✅ Icône active (étape en cours, couleur jaune) */
+.icon-circle.active {
+    background-color: #f8ff00 !important; /* 🟡 Étape en cours */
+    transform: scale(1.1);
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* ✅ Icône complétée (étape validée, couleur verte) */
+.icon-circle.completed {
+    background-color: #17fe5e !important; /* ✅ Vert pour les étapes complétées */
+    transform: scale(1.1);
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* ✅ Icône inactive */
+.icon-circle {
+    background-color: #666;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* ✅ Effet au survol */
+.icon-circle:hover {
+    background-color: #f8ff00;
+    transform: scale(1.1);
+}
+/* ✅ Conteneur des avatars */
+.avatars-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 avatars par ligne */
+    gap: 12px;
+    max-height: 245px; /* Hauteur max avec scroll */
+    overflow-y: auto;
+    padding: 10px;
+    scrollbar-width: none; /* Masquer la barre de scroll */
+    justify-content: center;
+    align-items: center;
+}
+
+.form-header-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+/* ✅ Style pour le texte "Avatar" */
+.avatar-label {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+
+/* ✅ Style des avatars */
+.avatar-item {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+
+/* ✅ Style des images d'avatars */
+.avatar-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ Animation au survol */
+.avatar-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.15);
+}
+
+.language-item.selected, .voice-btn.selected {
+    border: 2px solid #f8ff00;
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+}
+
+
+/* ✅ Applique un effet aux voix sélectionnées */
+.voice-btn.selected {
+    background: #f8ff00;
+    color: black;
+    font-weight: bold;
+}
+/* ✅ Style Brain Type sélectionné */
+.brain-card.selected {
+    border: 2px solid #f8ff00; /* Bordure jaune */
+    background: rgba(255, 255, 0, 0.2);
+    transform: scale(1.05);
+    transition: 0.3s ease-in-out;
+}
+
+
+/* ✅ Icône en haut à droite (ex: couronne) */
+.avatar-item .avatar-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+/* ✅ Effet de sélection pour l'avatar */
+.avatar-item.selected {
+    border: 3px solid #f8ff00; /* 🟡 Bordure jaune pour indiquer la sélection */
+    box-shadow: 0px 5px 15px rgba(255, 255, 0, 0.5);
+    transform: scale(1.05);
+}
+
+
+/* ✅ Masquer la scrollbar pour Chrome/Safari */
+.avatars-container::-webkit-scrollbar {
+    display: none;
+}
+
+.avatar-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
+/* ✅ Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.avatar-item {
+    animation: fadeIn 0.3s ease-in-out;
+}
+/* ✅ Titres des options */
+.option-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 8px;
+    margin: 6px;
+}
+
+/* ✅ Conteneur des langues */
+.language-options {
+    display: flex;
+    gap: 10px;
+}
+
+/* Conteneur principal */
+.selected-language {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: black;
+    border: 2px solid yellow;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.selected-language .flag-img {
+    width: 41px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+/* Icône dropdown */
+/* Conteneur principal */
+.selected-voice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: black;
+    border: 2px solid yellow;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.selected-voice i {
+    margin-right: 10px;
+    color: yellow;
+}
+
+/* Icône dropdown */
+.dropdown-icon {
+    font-size: 14px;
+    color: yellow;
+}
+
+/* Liste déroulante */
+.voice-dropdown {
+    background: black;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 10px;
+    position: absolute;
+    width: 255px;
+    z-index: 1000;
+}
+
+.voice-item {
+    display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        transition: background .3s;
+        color: white;
+        border-radius: 22px;
+}
+
+.voice-item:hover {
+    background: yellow;
+    color: black;
+}
+
+.voice-item i {
+    margin-right: 10px;
+}
+
+/* Icône de lecture avec effet de survol */
+.voice-play-icon {
+    cursor: pointer;
+    margin-right: 10px;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Liste déroulante */
+.language-dropdown {
+    background: black;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 10px;
+    position: absolute;
+    width: 200px;
+    z-index: 1000;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.language-item:hover {
+    background: yellow;
+    color: black;
+}
+
+.language-item .flag-img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.flag {
+    margin-right: 8px;
+}
+
+/* ✅ Conteneur des voix */
+.voice-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.voice-btn {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 10px;
+    border-radius: 24px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.voice-btn i {
+    margin-right: 8px;
+}
+
+.voice-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.language-options {
+    display: flex;
+    gap: 10px;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #333;
+    color: white;
+    padding: 5px 21px;
+    margin: 4px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.language-item:hover {
+    transform: scale(1.1);
+}
+
+/* ✅ Style des drapeaux */
+.flag-img {
+    width: 25px;
+    height: auto;
+    border-radius: 3px;
+}
+/* ✅ Titre de la section */
+.communication-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin: 5px;
+}
+
+/* ✅ Conteneur des sliders */
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+/* ✅ Labels des sliders */
+.slider-label {
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ✅ Sliders : Ligne fine en gris */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px; /* Ligne fine */
+    background: #666; /* Gris */
+    padding: 1px 1px;
+    margin: 14px;
+    border-radius: 23px;
+    outline: none;
+    transition: background 0.2s;
+}
+
+/* ✅ Style du curseur */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* ✅ Effet hover pour le slider */
+.slider:hover {
+    background: #888; /* Gris plus clair */
+}
+
+/* ✅ Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligné à gauche */
+    margin: 5px;
+    margin-bottom: 3px;
+    margin-top: 9px;
+}
+
+/* ✅ Style du toggle switch */
+.toggle-switch {
+    position: relative;
+    width: 30px;
+    height: 16px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #777;
+    border-radius: 34px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.brain-card.disabled {
+    opacity: 0.5;  /* Rendre l'option plus fade */
+    pointer-events: none; /* Empêcher le clic */
+    cursor: not-allowed; /* Afficher un curseur interdit */
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 6px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* ✅ Style du toggle activé */
+.toggle-switch input:checked + .toggle-slider {
+    background-color: #00ff7f;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(14px);
+}
+
+/* ✅ Texte Advanced Soul */
+.toggle-label {
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+/* ✅ Section Brain Type */
+.brain-selection {
+    margin-top: 20px;
+}
+
+.brain-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-top: -17px;
+}
+
+/* ✅ Conteneur des cartes */
+.brain-options {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* ✅ Style des cartes */
+.brain-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 11px;
+    width: 143px;
+    height: 125px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+/* ✅ Effet hover */
+.brain-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* ✅ Niveau du cerveau */
+.brain-level {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ✅ Description */
+.brain-description {
+    font-size: 10px;
+    margin-top: -13px;
+    opacity: 0.8;
+}
+
+/* ✅ Icône d'info */
+.info-icon {
+    font-size: 10px;
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    opacity: 0.6;
+}
+
+/* ✅ Carte sélectionnée */
+
+
+/* ✅ Style pour l’option Premium */
+.brain-card.premium {
+    position: relative;
+}
+
+/* ✅ Icône Couronne */
+.crown-icon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+}
+/* ✅ Conteneur des instructions */
+.instructions-container {
+    margin-bottom: 15px;
+}
+
+/* ✅ Titre Instructions */
+.instructions-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+/* ✅ Zone de texte */
+.instructions-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 21px;
+    color: white;
+    font-size: 13px;
+    line-height: 1.4;
+    border: none;
+    resize: none;
+    height: 70px;
+}
+
+/* ✅ Conteneur du formulaire Knowledge */
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+/* ✅ Conteneur flexible pour aligner Upload + Input Title */
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: -7px;
+}
+
+/* ✅ Bouton Upload Image */
+.upload-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
+}
+
+/* ✅ Icône du bouton */
+.upload-btn i {
+    font-size: 14px;
+    color: white;
+}
+
+/* ✅ Effet hover */
+.upload-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+/* ✅ Input Title prend le reste de l'espace */
+.input-row input {
+    flex-grow: 1;
+    padding: 10px;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+}
+
+
+/* ✅ Conteneur des fichiers */
+.files-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 100%;
+    padding: 10px;
+}
+
+/* ✅ Style des fichiers */
+.file-card {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.file-card:hover {
+    transform: scale(1.05);
+    background-color: #333;
+}
+
+/* ✅ Icône du fichier */
+.file-icon {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+/* ✅ Nom du fichier */
+.file-name {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* ✅ Bouton de suppression */
+.delete-file-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    border: none;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.delete-file-btn:hover {
+    background-color: darkred;
+}
+
+/* ✅ Nouveau style pour "Files" */
+
+
+.files-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+/* ✅ Titre de la section */
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* ✅ Image bannière */
+.identity-banner {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* ✅ Conteneur des cartes */
+.files-header {
+    margin-bottom: -9px;
+}
+
+.files-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* ✅ Bouton "Add Card" */
+.add-card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.add-card-btn i {
+    font-size: 16px;
+    color: white;
+}
+
+/* ✅ Effet au survol */
+.add-card-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+/* ✅ Conteneur des cartes avec un scroll horizontal fluide */
+.cards-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    max-width: 100%; /* Ne dépasse pas le conteneur */
+    overflow-x: auto; /* Active le scroll horizontal */
+    white-space: nowrap; /* Garde les cartes alignées */
+    scrollbar-width: none; /* Masque la scrollbar sur Firefox */
+    scroll-behavior: smooth; /* Scroll fluide */
+}
+
+/* ✅ Masquer la scrollbar sur Chrome/Safari */
+.cards-container::-webkit-scrollbar {
+    display: none;
+}
+/* ✅ Style des cartes (carrées et propres) */
+
+
+/* ✅ Effet hover sur les cartes */
+.card:hover {
+    transform: scale(1.05);
+    background-color: #333;
+}
+.cards-container-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px; /* ou + si tu veux + haut */
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  
+  /* ✅ Garde les cartes bien carrées même en vertical */
+  .card {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+  }
+  .cards-grid-scrollable {
+    display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-height: 112px;
+        padding-top: 2px;
+        margin: 25px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+  }
+  .cards-grid-scrollable::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  .cards-grid-scrollable::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+/* ✅ Permet le défilement horizontal avec la souris */
+.cards-container:hover {
+    cursor: grab;
+}
+
+/* ✅ Empêche le surlignage du texte pendant le scroll */
+.cards-container:active {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* ✅ Bouton de suppression */
+.delete-card-btn {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    background-color: red;
+    border: none;
+    color: white;
+    width: 19px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3sease-in-out;
+}
+
+.delete-card-btn:hover {
+    background-color: darkred;
+}
+
+/* ✅ Image de la carte */
+.card-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+/* ✅ Titre de la carte */
+.card-title {
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+}
+
+/* ✅ Formulaire d'édition */
+.card-form {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Labels */
+.card-form label {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+/* ✅ Champs de formulaire */
+.card-form input,
+.card-form textarea {
+    width: 100%;
+    padding: 8px;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* ✅ Textearea */
+.card-form textarea {
+    height: 60px;
+    resize: none;
+}
+
+/* ✅ Boutons du formulaire */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* ✅ Boutons "BACK", "SKIP" et "SAVE AND NEXT" */
+.back-btn, .skip-btn, .save-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Bouton BACK */
+.back-btn {
+    background: #D9D9D9;
+    color: black;
+}
+
+.back-btn:hover {
+    background: #bbbbbb;
+}
+
+/* ✅ Bouton SKIP */
+.skip-btn {
+    background: #D9D9D9;
+    color: black;
+}
+
+.skip-btn:hover {
+    background: #bbbbbb;
+}
+
+/* ✅ Bouton SAVE AND NEXT */
+.save-btn {
+    background: #f8ff00;
+    color: black;
+}
+
+.save-btn:hover {
+    background: #e5e600;
+    transform: translateY(-2px);
+}
+.card-logo {
+    width: 50%;
+    height: auto;
+    opacity: 0.8; /* Légère transparence */
+}
+
+.connections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 7px;
+}
+
+/* ✅ Élément de connexion */
+.connection-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background 0.3s ease-in-out;
+}
+
+/* ✅ Icône et nom de la connexion */
+.connection-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.connection-info i {
+    font-size: 18px;
+    color: white;
+}
+
+.connection-name {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+/* ✅ Toggle Switch */
+.toggle-switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.sliderr {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #888;
+    transition: 0.4s;
+    border-radius: 20px;
+}
+
+.sliderr:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* ✅ Quand le switch est activé */
+input:checked + .sliderr {
+    background-color: #17fe5e;
+}
+
+input:checked + .sliderr:before {
+    transform: translateX(20px);
+}
+.save-btnn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #17fe5e; /* Jaune vif */
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ Effet au survol */
+.save-btnn:hover {
+    background: #17fe5e;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Animation au clic */
+.save-btnn:active {
+    transform: scale(0.98);
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.3);
+}
+.scrollable-section {
+    max-height: 100px;
+    overflow-y: scroll; /* Active le défilement vertical */
+    padding-right: 10px;
+    scrollbar-width: none; /* Cache complètement la barre de scroll sur Firefox */
+    -ms-overflow-style: none; /* Cache la barre de scroll sur Edge */
+}
+.scrollable-section::-webkit-scrollbar {
+    display: none; /* Cache la scrollbar sur Chrome et Safari */
+}
+.scrollable-section::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 10px;
+}
+.scroll-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    margin: 5px auto;
+    transition: transform 0.2s;
+}
+.scroll-btn:hover {
+    transform: scale(1.1);
+}
+
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .save-btnn:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed !important;
+  }
+  .background-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.background-colors {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  
+  /* ✅ Style pour les bulles de couleur existantes */
+  .color-item {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+  }
+  
+  /* ✅ Style pour le color picker custom à gauche */
+  .custom-color-picker {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px dashed #888;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  
+  /* ✅ Input invisible mais prend toute la place */
+  .custom-color-picker input[type="color"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    background: #1a1a1a;
+    border-radius: 16px;
+    width: 420px;
+    padding: 32px;
+    color: white;
+    box-shadow: 0 0 25px rgba(255, 255, 0, 0.15);
+    animation: pop-in 0.25s ease-out;
+  }
+  
+  @keyframes pop-in {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .modal-content h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #f8ff00;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 12px 14px;
+    width: 100%;
+    color: white;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  .modal-content textarea {
+    resize: none;
+    height: 100px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .cancel-btn {
+    background: #333;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background: #444;
+  }
+  
+  .confirm-btn {
+    background: #f8ff00;
+    color: black;
+    box-shadow: 0 0 10px #f8ff00;
+  }
+  
+  .confirm-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .upload-btn {
+    background-color: #292929;
+    color: #f8ff00;
+    border: 1px solid #f8ff00;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background 0.3s ease;
+  }
+  /* ✅ Conteneur pour bien centrer le bouton */
+.card-actions {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 25px 0;
+  }
+  
+  /* ✅ Nouveau style pour le bouton */
+  .open-modal-btn {
+    background-color: #f8ff00;
+    color: #000;
+    font-weight: 600;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 0 12px rgba(248, 255, 0, 0.3);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .open-modal-btn i {
+    font-size: 14px;
+  }
+  
+  /* ✅ Effet au hover */
+  .open-modal-btn:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 18px rgba(248, 255, 0, 0.6);
+  }
+  
+  .upload-btn:hover {
+    background-color: #f8ff00;
+    color: black;
+  }
+  
+  /* ✅ Petite icône 🎨 bien centrée */
+  .custom-color-picker::after {
+    content: "🎨";
+    font-size: 16px;
+    z-index: 1;
+  }
+  
+.title-left {
+    text-align: left;
+    width: 100%;
+    padding-left: 10px; /* Ajuste selon le design */
+}
+
+.color-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.color-item.selected {
+    border: 3px solid #ff0;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+}
+.upload-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #444; /* Grise le bouton */
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+  
+  .cards-container-vertical::-webkit-scrollbar {
+    width: 6px;
+  }
+  .cards-container-vertical::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  .toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  display: inline-block;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #777;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #17fe5e; /* ✅ Vert fluo */
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+.input-with-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  
+  .input-with-icons input {
+    flex: 1;
+  }
+  
+  .input-with-icons button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+  
+  .input-with-icons button i {
+    font-size: 14px;
+  }
+  
+  .input-with-icons button:hover {
+    background-color: #f8ff00;
+    color: black;
+    transform: scale(1.1);
+  }
+  .setting-title {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .kpi-container {
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .kpi-grid {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+  
+  .kpi-box {
+    background-color: #1c1c1c;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+    color: white;
+  }
+  
+  .kpi-value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .kpi-label {
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 1.3;
+  }
+  
+  .dropdown select {
+    background-color: #1c1c1c;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+  }
+  .upload-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: -15px;
+    margin-left: 14px;
+    font-size: 13px;
+    color: #00ff88;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .upload-check i {
+    color: #00ff88;
+    font-size: 16px;
+  }
+  .tags-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: -8px;
+    margin-bottom: 20px;
+    min-height: 44px;
+    cursor: text;
+  }
+  
+  .tag {
+    background: #f8ff00;
+    color: black;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .remove-tag {
+    cursor: pointer;
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .tag-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    flex: 1;
+    min-width: 100px;
+  }
+  
+  /* Petit effet d’apparition */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .custom-delete-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  
+    .modal-box {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      color: white;
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+  
+      .modal-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+  
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+  
+      .modal-text {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        color: #ccc;
+      }
+  
+      .modal-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+  
+        .btn {
+          flex: 1;
+          padding: 0.7rem 1rem;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+  
+          &.cancel {
+            background: #333;
+            color: white;
+  
+            &:hover {
+              background: #555;
+            }
+          }
+  
+          &.delete {
+            background: #f8ff00;
+            color: black;
+  
+            &:hover {
+              background: #e6eb00;
+            }
+          }
+        }
+      }
+    }
+  }
+  
