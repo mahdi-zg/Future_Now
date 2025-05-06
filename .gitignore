@@ -1,0 +1,11 @@
+# Empêcher la clé OpenAI d’être pushée
+.env
+
+# Empêcher les credentials Google d’être exposés
+/backend/config/google-credentials.json
+
+# Dossier de build Maven
+/backend/target
+
+# Node modules si jamais t’en as dans frontend
+/frontend/node_modulesbackend/src/main/resources/config/google-credentials.json
