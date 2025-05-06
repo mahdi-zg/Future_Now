@@ -1,0 +1,69 @@
+<div class="sidebar">
+    <!-- Logo -->
+    <img src="assets/Future-Store-Icon.png" alt="Logo" style="width: 80px; height: 80px; margin-left: 64px;" class="logo" (click)="goToDashboard()"/>
+
+    <!-- Bouton "Create Agent" -->
+    <div class="create-agent-container" (click)="createAgent()">
+        <div class="create-agent-circle">+</div>
+        <div class="create-agent-text">
+            <span>CREATE</span><br>
+            <span>AGENT</span>
+        </div>
+    </div>
+    
+
+    <!-- Liste des agents avec scroll automatique -->
+    <div class="agents-list" #agentsList (mousemove)="scrollAgents($event)">
+
+         <!-- 🔹 Affichage des projets de l'utilisateur -->
+         <!-- 🔹 Affichage des projets de l'utilisateur -->
+         <div class="agent-card" *ngFor="let project of projects; let i = index" (click)="selectProject(project.id)" [ngStyle]="{ 'background-color': project.backgroundColor }">
+            <img [src]="project.image" alt="Project" class="agent-avatar" />
+                <!-- ✅ Badge "Default Project" ajouté uniquement pour le projet par défaut -->
+            <div class="agent-overlay">
+                <div class="overlay-content">
+                    <p class="agent-name">{{ project.name | uppercase }}</p>
+                    <p class="agent-function">{{ project.function | uppercase }}</p>
+                </div>
+            </div>
+            <!-- ✅ Ajout du bouton delete pour chaque projet -->
+            <button class="delete-agent" (click)="openDeletePopup(i)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+        <!-- 🔹 Affichage des agents par défaut -->
+ 
+
+       
+    </div>
+
+    <!-- Section Account -->
+    <div class="account-section" (click)="goToProfile()" style="color: white; margin-left: 8px;">
+        <p>ACCOUNT</p>
+    </div>
+</div>
+
+<!-- ✅ Pop-up de confirmation de suppression -->
+<div class="delete-popup" *ngIf="showDeletePopup">
+    <div class="popup-container">
+        <div class="popup-header">
+            <i class="fas fa-exclamation-circle warning-icon"></i>
+            <h2>Delete Agent</h2>
+        </div>
+        <p class="popup-message">Are you sure you want to permanently delete this agent?</p>
+        <div class="popup-buttons">
+            <button class="confirm-delete" 
+            (click)="confirmDelete()" 
+            [disabled]="isDeleting">
+            <span *ngIf="!isDeleting">YES, DELETE</span>
+            <span *ngIf="isDeleting">
+            <i class="spinner"></i>
+            <span style="margin-left: 8px;">LOADING...</span>
+            </span>
+
+            </button>
+                <button class="cancel-delete" (click)="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+</div>

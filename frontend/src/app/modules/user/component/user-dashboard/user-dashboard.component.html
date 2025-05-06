@@ -1,0 +1,739 @@
+<div class="user-dashboard">
+    <!-- Sidebar -->
+    <app-sidebar [projectCreated]="projectCreated" 
+    (projectSelected)="loadProjectDetails($event)" 
+    (newAgentCreated)="resetForm()"></app-sidebar>
+    
+    <div class="vertical-divider"></div>
+
+    <!-- Conteneur principal -->
+    <div class="dashboard-content">
+        
+        <!-- Partie centrale avec l'image -->
+        <div class="dashboard-center">
+            <app-ui 
+    [selectedAvatar]="selectedAvatar!"
+    [backgroundColor]="selectedBackgroundColor"
+    [isCreateMode]="isCreateMode"
+    [visibleCards]="cards"
+    [projectId]="selectedProjectId!"> 
+  </app-ui>
+
+
+                  </div>
+        
+        <div class="dashboard-right-wrapper">
+        <!-- Partie droite avec les formulaires et icônes -->
+        <div class="dashboard-right">
+            <div class="form-container">
+
+                <div class="form-header">
+                    <div class="form-header-left">
+                      <p class="form-name" style="font-size: 30px; font-weight: 800; margin: 0;">{{ projectTitle }}</p>
+                      <p class="form-function" style="font-size: 20px; font-weight: 700; margin: 0;">{{ projectFunction }}</p>
+                    </div>
+                  
+                    <div class="form-header-right" *ngIf="isEditingProject">
+                       
+                        <div class="icon-circle" 
+                             [class.active]="activeTab === 'statistics'" 
+                             (click)="switchTab('statistics')" 
+                             title="Statistics">
+                          <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="icon-circle" 
+                        [class.active]="activeTab === 'render'" 
+                        (click)="switchTab('render')" 
+                        title="Render">
+                     <i class="fas fa-eye"></i>
+                   </div>
+                   
+                      </div>
+                      
+                    
+                      
+                </div>
+                  
+                  
+                  
+
+                <div class="form-divider"></div>
+
+                <!-- Icônes pour naviguer entre les étapes -->
+                <!-- Icônes pour naviguer entre les étapes -->
+                <div class="form-icons">
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'identity'"
+                        [class.completed]="isStepCompleted('identity')"
+                        (click)="!isCreateMode && switchTab('identity')">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'appearance'"
+                        [class.completed]="isStepCompleted('appearance')"
+                        (click)="!isCreateMode && switchTab('appearance')">
+                        <i class="fas fa-user"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'heart'"
+                        [class.completed]="isStepCompleted('heart')"
+                        (click)="!isCreateMode && switchTab('heart')">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'brain'"
+                        [class.completed]="isStepCompleted('brain')"
+                        (click)="!isCreateMode && switchTab('brain')">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'lightbulb'"
+                        [class.completed]="isStepCompleted('lightbulb')"
+                        (click)="!isCreateMode && switchTab('lightbulb')">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'layer'"
+                        [class.completed]="isStepCompleted('layer')"
+                        (click)="!isCreateMode && switchTab('layer')">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                  
+                    <div class="icon-circle" 
+                        [class.active]="activeTab === 'bolt'"
+                        [class.completed]="isStepCompleted('bolt')"
+                        (click)="!isCreateMode && switchTab('bolt')">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                  </div>
+                  
+  
+
+                <!-- Formulaires -->
+                <div class="form-section" *ngIf="activeTab === 'identity'">
+                    <h2 class="section-title">Step 1: Identity</h2>
+                    <img src="../../../../../assets/Rounded_Rectangle.png" alt="Identity Banner" class="identity-banner">
+
+                    <label for="name">Name</label>
+                    <input type="text" id="name" [(ngModel)]="identityForm.name" 
+                           (input)="updateProjectTitle()" placeholder="Exemple : Alex Jonson">
+                    
+                    <label for="function">Function</label>
+                    <input type="text" id="function" [(ngModel)]="identityForm.function" 
+                           (input)="updateProjectFunction()" placeholder="Exemple : Sales Agent">
+                    
+
+                    <label for="description">Description</label>
+                    <textarea id="description" [(ngModel)]="identityForm.description" placeholder="Exemple : Description ici..."></textarea>
+
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" [(ngModel)]="identityForm.company" placeholder="Exemple : Future Now">
+
+                    <div class="form-buttons">
+                        <div class="right-buttons">
+                            <button class="save-btn" (click)="validateIdentity()">SAVE AND NEXT</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-section" *ngIf="activeTab === 'appearance'">
+                    <h2 class="section-title">Step 2: Appearance</h2>
+                    
+                    <!-- Image bannière -->
+                    <img src="../../../../../assets/ApperancePhoto.png" alt="Appearance Banner" class="identity-banner">
+                    
+                    <!-- Grille d'avatars -->
+                    <h2 class="avatar-title">Avatar</h2>
+                    <div class="avatars-container" #avatarsList (mousemove)="scrollAvatars($event)">
+                        <div class="avatar-item" 
+                             *ngFor="let avatar of avatars" 
+                             [class.selected]="selectedAvatar === avatar.image"
+                             (click)="selectAvatar(avatar.image)">
+                            <img [src]="avatar.image" alt="Avatar" class="avatar-image" />
+                        </div>
+                    </div>
+                    <!-- Sélection de la couleur de fond -->
+                    <h2 class="background-title title-left">Background Color</h2>
+                    <div class="background-colors">
+                         <!-- ✅ Color picker personnalisé -->
+                    <label class="color-item custom-color-picker">
+                        <input type="color" (input)="onCustomColorSelected($event)" />
+                        🎨
+                    </label>
+                    <div class="color-item"
+                        *ngFor="let color of backgroundColors" 
+                        [class.selected]="selectedBackgroundColor === color"
+                        [style.background]="color"
+                        (click)="selectBackgroundColor(color)">
+                    </div>
+
+                   
+                    </div>
+
+
+
+
+                
+                    <div class="form-buttons">
+                        <!-- Bouton Back à gauche -->
+                        <button class="back-btn" (click)="switchTab('identity')">BACK</button>
+                        
+                        <!-- Conteneur des boutons à droite -->
+                        <div class="right-buttons">
+                            <button class="skip-btn" (click)="switchTab('identity')">SKIP</button>
+                            <button class="save-btn" (click)="validateAppearance()">SAVE AND NEXT</button>
+                        </div>
+                    </div>
+                                 
+                </div>
+                <div class="form-section" *ngIf="activeTab === 'heart'">
+                    <h2 class="section-title">Step 3: Voice and Soul</h2>
+
+                    <img src="../../../../../assets/VoiceSoul.png" alt="Identity Banner" class="identity-banner">
+
+                                <!-- Section Native Language -->
+                           <!-- Section Native Language -->
+                          <!-- Section Native Language -->
+
+                    <div class="option-group">
+                        <p class="option-title">Native Language</p>
+
+                        <!-- Bouton sélectionné -->
+                        <div class="selected-language" (click)="toggleLanguageDropdown()">
+                            <img [src]="selectedLanguage.image" alt="Flag" class="flag-img">
+                            <span>{{ selectedLanguage.name }}</span>
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </div>
+
+                        <!-- Liste déroulante des langues -->
+                        <div class="language-dropdown" *ngIf="isLanguageDropdownOpen">
+                            <div 
+                                class="language-item" 
+                                *ngFor="let language of languages"
+                                (click)="selectLanguage(language)">
+                                <img [src]="language.image" alt="{{language.name}} Flag" class="flag-img">
+                                <span>{{ language.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Sélection de la voix -->
+                    <!-- Sélection de la voix avec une Drop List -->
+<!-- Sélection de la voix avec Drop List -->
+<div class="option-group">
+    <p class="option-title">Select Voice</p>
+
+    <!-- Bouton sélectionné -->
+    <div class="selected-voice" (click)="toggleVoiceDropdown()">
+        <i class="fas fa-volume-up"></i>
+        <span>{{ selectedVoice.name }}</span>
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+    </div>
+
+    <!-- Liste déroulante des voix -->
+   <!-- Liste déroulante des voix -->
+<div class="voice-dropdown" *ngIf="isVoiceDropdownOpen">
+    <div 
+        class="voice-item" 
+        *ngFor="let voice of voices"
+        (click)="selectVoice(voice)"
+        (mouseenter)="hoveredVoice = voice.name"
+        (mouseleave)="hoveredVoice = null">
+        
+        <!-- Icône de lecture dynamique -->
+        <i [class]="currentPlayingVoice === voice.name ? 'fas fa-pause' : 'fas fa-play'"
+           class="voice-play-icon"
+           [style.color]="hoveredVoice === voice.name ? 'black' : 'yellow'"
+           (click)="toggleVoiceAudio(voice); $event.stopPropagation()">
+        </i>
+        
+        <span>{{ voice.name }}</span>
+    </div>
+</div>
+
+</div>
+
+
+
+                        
+                       <!-- Section Communication Style -->
+                       <div class="communication-style">
+                        <p class="communication-title">Communication Style</p>
+                    
+                        <!-- Sliders existants -->
+                        <div class="slider-container">
+                            <span class="slider-label">Formal</span>
+                            <input type="range" min="0" max="10" [(ngModel)]="formalityScore" class="slider">
+                            <span class="slider-label">Casual</span>
+                        </div>
+                    
+                        <div class="slider-container">
+                            <span class="slider-label">Fast</span>
+                            <input type="range" min="0" max="10" [(ngModel)]="responseSpeedScore" class="slider">
+                            <span class="slider-label">Long Response</span>
+                        </div>
+                    
+                        
+                    
+                        <!-- Section Avancée avec Scroll -->
+                        <div *ngIf="advancedSoul" id="advancedSoulScroll" class="scrollable-section">
+                            <!-- Section Temperature -->
+                            <p class="communication-title">Temperature</p>
+                            <div class="slider-container">
+                                <span class="slider-label">Calm</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="calmnessScore" class="slider">
+                                <span class="slider-label">Impulsive</span>
+                            </div>
+                        
+                            <div class="slider-container">
+                                <span class="slider-label">Introverted</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="introversionScore" class="slider">
+                                <span class="slider-label">Extroverted</span>
+                            </div>
+                            <p class="communication-title">Emotions and expressiveness</p>
+                    
+                            <!-- Émotions -->
+                            <div class="slider-container">
+                                <span class="slider-label">Enthusiastic</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="enthusiasmScore" class="slider">
+                                <span class="slider-label">Neutral</span>
+                            </div>
+                    
+                            <div class="slider-container">
+                                <span class="slider-label">Curious</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="curiosityScore" class="slider">
+                                <span class="slider-label">Pragmatic</span>
+                            </div>
+                            <p class="communication-title">Personality</p>
+
+                            <!-- Personnalité -->
+                            <div class="slider-container">
+                                <span class="slider-label">Warm</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="warmthScore" class="slider">
+                                <span class="slider-label">Cold</span>
+                            </div>
+                    
+                            <div class="slider-container">
+                                <span class="slider-label">Serious</span>
+                                <input type="range" min="0" max="10" [(ngModel)]="seriousnessScore" class="slider">
+                                <span class="slider-label">Humorous</span>
+                            </div>
+                        </div>                         
+                    </div>
+
+                    <div class="toggle-container">
+                        <label class="toggle-switch">
+                            <input type="checkbox" [(ngModel)]="advancedSoul">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="toggle-label">Advanced Soul</span>
+                    </div>
+
+
+                    <div class="form-buttons">
+                        <!-- Bouton Back à gauche -->
+                        <button class="back-btn" (click)="switchTab('appearance')">BACK</button>
+                        
+                        <!-- Conteneur des boutons à droite -->
+                        <div class="right-buttons">
+                            <button class="skip-btn" (click)="switchTab('appearance')">SKIP</button>
+                            <button class="save-btn" (click)="saveVoiceAndSoul()">SAVE AND NEXT</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" *ngIf="activeTab === 'brain'">
+                    <h2 class="section-title">Step 4: Personality</h2>
+
+                    <img src="../../../../../assets/Brain.png" alt="Identity Banner" class="identity-banner">
+
+                    
+                                    
+                                    <!-- Section Select Brain Type -->
+                        <!-- Sélection du Brain Type -->
+                                            <!-- Sélection du Brain Type -->
+                        <div class="brain-selection">
+                            <p class="brain-title">Select Brain Type</p>
+                            <div class="brain-options">
+                                <div class="brain-card" 
+                                [class.selected]="personalityForm.brainType === 'AGENT LEVEL ONE'"
+                                    (click)="selectBrainType('AGENT LEVEL ONE')">
+                                    <p class="brain-level">AGENT LEVEL ONE</p>
+                                    <p class="brain-description">Can execute simple tasks</p>
+                                    <i class="info-icon fas fa-info-circle"></i>
+                                </div>
+
+                                <div class="brain-card premium disabled" 
+                                    [class.selected]="personalityForm.brainType === 'AGENT LEVEL 2'"
+                                    (click)="selectBrainType('AGENT LEVEL 2')"
+                                    [ngClass]="{'disabled': true}"> <!-- Ajoute la classe "disabled" -->
+                                    <p class="brain-level">AGENT LEVEL 2</p>
+                                    <p class="brain-description">Handles intermediate tasks</p>
+                                    <i class="info-icon fas fa-info-circle"></i>
+                                </div>
+
+                                <div class="brain-card"
+                                    [class.selected]="personalityForm.brainType === 'SUPER BRAIN'"
+                                    (click)="selectBrainType('SUPER BRAIN')" 
+                                    > 
+                                    <p class="brain-level">SUPER BRAIN</p>
+                                    <p class="brain-description">Advanced AI abilities</p>
+                                    <i class="info-icon fas fa-info-circle"></i>
+                                    <span class="crown-icon">👑</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Section Instructions -->
+                        <!-- Section Instructions -->
+                        <!-- Instructions -->
+                        <div class="instructions-container">
+                            <p class="instructions-title">Instructions</p>
+                            <textarea class="instructions-box" 
+                                [(ngModel)]="personalityForm.instructions"
+                                (input)="updateInstructions($event)"
+                                placeholder="Exemple : A vibrant sales agent at a fast-food joint is quick-witted, energetic, and adept at handling bustling crowds, taking orders, and ensuring customers have an enjoyable dining experience."></textarea>
+                        </div>
+
+
+
+                        
+                    <div class="form-buttons">
+                        <!-- Bouton Back à gauche -->
+                        <button class="back-btn" (click)="switchTab('heart')">BACK</button>
+                        
+                        <!-- Conteneur des boutons à droite -->
+                        <div class="right-buttons">
+                            <button class="skip-btn" (click)="switchTab('heart')">SKIP</button>
+                            <button class="save-btn" (click)="validatePersonality()">SAVE AND NEXT</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" *ngIf="activeTab === 'lightbulb'">
+                    <h2 class="section-title">Step 5: Knowledge</h2>
+
+                    <img src="../../../../../assets/knowledge.png" alt="Identity Banner" class="identity-banner">
+
+                        <!-- ✅ Nouvelle section pour "Files" -->
+                        <div class="files-header">
+                            <p class="files-title">Files</p>
+                        </div>
+
+                      <!-- Bouton Ajouter un fichier -->
+                   <!-- ✅ Bouton Upload (désactivé si AGENT LEVEL ONE) -->
+                       <!-- ✅ Section Upload File avec désactivation -->
+                        <div class="file-upload-container">
+                            <input type="file" id="fileUpload" (change)="uploadFile($event)" [disabled]="isUploadDisabled" hidden>
+                            <label for="fileUpload" class="upload-btn" [class.disabled]="isUploadDisabled">
+                                <i class="fas fa-upload"></i> Upload File
+                            </label>
+                        </div>
+
+                        <!-- ✅ Message d'erreur -->
+                        <p class="error-message" *ngIf="isUploadDisabled">
+                            {{ errorMessage }}
+                        </p>
+
+
+
+                    <!-- Liste des fichiers uploadés -->
+                    <div class="files-container">
+                        <div class="file-card" *ngFor="let file of uploadedFiles; let i = index">
+                            <i class="fas fa-file-alt file-icon"></i>
+                            <p class="file-name">{{ file.name }}</p>
+                            <button class="delete-file-btn" (click)="deleteFile(i, $event)">✖</button>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <!-- Bouton Back à gauche -->
+                        <button class="back-btn" (click)="switchTab('brain')">BACK</button>
+                        
+                        <!-- Conteneur des boutons à droite -->
+                        <div class="right-buttons">
+                            <button class="skip-btn" (click)="switchTab('brain')">SKIP</button>
+                            <button class="save-btn" (click)="saveStepAndGoNext('lightbulb', 'layer')">SAVE AND NEXT</button>
+                          </div>
+                    </div>
+                </div>
+                <div class="form-section" *ngIf="activeTab === 'layer'">
+                    <h2 class="section-title">Step 6: Cards</h2>
+                  
+                    <img src="../../../../../assets/Cards.png" alt="Identity Banner" class="identity-banner">
+                  
+                    <div class="files-header">
+                      <p class="files-title">Cards</p>
+                    </div>
+                  
+                    <!-- ✅ Nouveau bouton stylé -->
+                    <!-- ✅ Nouveau conteneur pour centrer -->
+                    <div class="card-actions">
+                        <button class="open-modal-btn" (click)="openCardModal()">
+                        <i class="fas fa-plus"></i> New Card
+                        </button>
+                    </div>
+  
+                  
+                    <!-- ✅ Liste des cartes avec scroll horizontal -->
+                    <div #cardsContainer class="cards-grid-scrollable"
+                         (mousemove)="startAutoScroll($event)" 
+                         (mouseleave)="stopAutoScroll()">
+                      <div class="card" *ngFor="let card of cards; let i = index">
+                        <button class="delete-card-btn" (click)="deleteCard(i, $event)">−</button>
+                  
+                        <div class="card-image"
+                          [ngStyle]="{
+                            'background-image': card.image ? 'url(' + card.image + ')' : 'none',
+                            'background-color': card.image ? 'transparent' : '#f8ff00'
+                          }">
+                          <img *ngIf="!card.image" src="../../../../../assets/Future-Store-Icon.png" alt="Logo" class="card-logo">
+                        </div>
+                  
+                        <p class="card-title">{{ card.title || 'New Card' }}</p>
+                      </div>
+                    </div>
+                  
+                    <!-- ✅ Boutons navigation -->
+                    <div class="form-buttons">
+                      <button class="back-btn" (click)="switchTab('lightbulb')">BACK</button>
+                      <div class="right-buttons">
+                        <button class="skip-btn" (click)="switchTab('lightbulb')">SKIP</button>
+                        <button class="save-btn" (click)="saveStepAndGoNext('layer', 'bolt')">SAVE AND NEXT</button>
+                      </div>
+                    </div>
+                  
+                    <!-- ✅ MODAL POPUP pour ajouter une carte -->
+                    <div class="modal-overlay" *ngIf="showCardModal">
+                      <div class="modal-content">
+                        <h3>Add New Card</h3>
+                  
+                        <div class="input-row">
+                            <button class="upload-btn" (click)="uploadTrigger.click()">
+                              <i class="fas fa-upload"></i> Upload Image
+                            </button>
+                            <input type="file" hidden #uploadTrigger (change)="uploadCardImage($event)">
+                            
+                            <!-- ✅ Check visuel si image uploadée -->
+                            <span class="upload-check" *ngIf="imageUploaded">
+                              <i class="fas fa-check-circle"></i> Uploaded!
+                            </span>
+                          </div>
+                          
+                  
+                        <input type="text" placeholder="Enter title..." [(ngModel)]="newCard.title" />
+                  
+                        <textarea placeholder="Enter prompt..." [(ngModel)]="newCard.prompt"></textarea>
+                        <div class="tags-input-container" (click)="tagInput.focus()">
+                            <div class="tag" *ngFor="let tag of displayedTags; let i = index">
+                                {{ tag }}
+                              <span class="remove-tag" (click)="removeTag(i)">×</span>
+                            </div>
+                            <input type="text"
+                                   #tagInput
+                                   [(ngModel)]="newTag"
+                                   (keydown.enter)="addTag()"
+                                   (keydown.space)="addTag()"
+                                   placeholder="# Type your tags..."
+                                   class="tag-input"/>
+                          </div>
+                          
+                  
+                        <div class="modal-actions">
+                          <button class="cancel-btn" (click)="closeCardModal()">Cancel</button>
+                          <button class="confirm-btn" (click)="confirmAddCard()">Add Card</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                
+                <div class="form-section" *ngIf="activeTab === 'bolt'">
+                    <h2 class="section-title">Final Step: Connections</h2>
+
+                    <img src="../../../../../assets/Connections.png" alt="Identity Banner" class="identity-banner">
+
+                    <!-- Liste des intégrations -->
+                                    <!-- ✅ Liste des intégrations avec état désactivé -->
+                <div class="connections-container">
+                    <div class="connection-item" *ngFor="let connection of connections">
+                        <div class="connection-info">
+                            <i [class]="connection.icon"></i>
+                            <p class="connection-name">{{ connection.name }}</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" [(ngModel)]="connection.enabled" [disabled]="isConnectionsDisabled">
+                            <span class="sliderr"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ✅ Message d'erreur si les connexions sont désactivées -->
+                <p class="error-message" *ngIf="isConnectionsDisabled">
+                    {{ errorMessage }}
+                </p>
+
+
+                    <div class="form-buttons">
+                        <button class="back-btn" (click)="switchTab('layer')">BACK</button>
+                    
+                        <div class="right-buttons">
+                          <!-- ✅ Bouton CREATE -->
+                        <button class="save-btnn"
+                        *ngIf="!isEditingProject"
+                        (click)="saveProject()"
+                        [disabled]="isLoading">
+                        <span *ngIf="!isLoading">CREATE AGENT</span>
+                        <span *ngIf="isLoading" class="spinner"></span>
+                        </button>
+
+                        <!-- ✅ Bouton UPDATE avec le même loading -->
+                        <button class="save-btnn"
+                        *ngIf="isEditingProject"
+                        (click)="updateProject()"
+                        [disabled]="isLoading">
+                        <span *ngIf="!isLoading">UPDATE AGENT</span>
+                        <span *ngIf="isLoading" class="spinner"></span>
+                        </button>
+
+                    
+
+                        </div>
+                    </div>
+                    
+                </div>
+ <!-- === Étape RENDER === -->
+ <div class="form-section" *ngIf="activeTab === 'render'">
+    <h2 class="section-title">Render</h2>
+    <img src="../../../../../assets/renders.png" alt="Render Banner" class="identity-banner">
+  
+    <!-- === Bloc Render Options === -->
+    <div class="render-settings">
+  
+      <!-- Toggle Agent Active -->
+      <label class="setting-label">
+        Agent Active
+        <label class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="isAgentActive">
+          <span class="toggle-slider"></span>
+        </label>          
+      </label>
+  
+      <!-- Full Screen Web Section -->
+      <div class="setting-block">
+        <p class="setting-title">Full Screen Web</p>
+        <label class="sub-label">Link Full Screen Web</label>
+        <div class="input-with-icons">
+          <input type="text" readonly value="future.ai/app/agents/1202323/webfull">
+          <button><i class="fas fa-copy"></i></button>
+          <button><i class="fas fa-eye"></i></button>
+        </div>
+  
+        <!-- Paramètre 1 avec son propre toggle -->
+        <label class="sub-label">Parameter </label>
+        <label class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="isParameter1Active">
+          <span class="toggle-slider"></span>
+        </label>          
+      </div>
+  
+      <!-- Kiosk Agent Section -->
+      <div class="setting-block">
+        <p class="setting-title">Kiosk Agent</p>
+        <label class="sub-label">Android App Link</label>
+        <div class="input-with-icons">
+          <input type="text" readonly value="future.ai/app/agents/1202323/webfull">
+          <button><i class="fas fa-copy"></i></button>
+          <button><i class="fas fa-eye"></i></button>
+        </div>
+  
+        <label class="sub-label">Agent ID</label>
+        <div class="input-with-icons">
+          <input type="text" readonly value="1435323525">
+          <button><i class="fas fa-copy"></i></button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Bouton Back -->
+    <div class="form-buttons">
+      <button class="back-btn" (click)="switchTab('statistics')">BACK</button>
+    </div>
+  </div>
+                <!-- === Étape STATISTICS === -->
+<!-- === Étape STATISTICS === -->
+<div class="form-section" *ngIf="activeTab === 'statistics'">
+    <h2 class="section-title">Statistics</h2>
+    <!-- IMAGE & MESSAGE -->
+    <img src="../../../../../assets/statistics.png" alt="Statistics Banner" class="identity-banner">
+
+      <!-- RAPID KPI'S -->
+      <div class="kpi-container mb-6">
+        <div class="dropdown">
+          <select>
+            <option selected>Last 30 days, daily</option>
+            <!-- Tu peux ajouter plus d'options ici -->
+          </select>
+        </div>
+    
+        <div class="kpi-grid">
+          <div class="kpi-box">
+            <p class="kpi-value">1256</p>
+            <p class="kpi-label">Total Number<br>Discussions</p>
+          </div>
+          <div class="kpi-box">
+            <p class="kpi-value">1,2K</p>
+            <p class="kpi-label">Total Minutes<br>Discussions</p>
+          </div>
+          <div class="kpi-box">
+            <p class="kpi-value">3,7</p>
+            <p class="kpi-label">Minutes Average<br>Discussion</p>
+          </div>
+        </div>
+      </div>
+    
+  
+    <!-- BOUTONS -->
+    <div class="form-buttons">
+      <button class="back-btn" (click)="switchTab('bolt')">BACK</button>
+      <div class="right-buttons">
+        <button class="save-btn" (click)="switchTab('render')">NEXT</button>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  
+  
+  
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- ✅ Modal de suppression de carte -->
+<div class="custom-delete-modal" *ngIf="showDeleteModal">
+    <div class="modal-box">
+      <div class="modal-icon">⚠️</div>
+      <h3 class="modal-title">Are you sure?</h3>
+      <p class="modal-text">This card will be permanently deleted.</p>
+      <div class="modal-buttons">
+        <button class="btn cancel" (click)="cancelDelete()">Cancel</button>
+        <button class="btn delete" (click)="confirmDelete()">Yes, delete</button>
+      </div>
+    </div>
+  </div>
+  
