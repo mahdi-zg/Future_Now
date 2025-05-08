@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiBaseUrl: 'https://api.saasbuilder.future-now.ai'
+    apiBaseUrl: 'https://api.saasbuilder-dev.future-now.ai'
   };
-  
+
