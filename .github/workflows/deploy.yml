@@ -24,7 +24,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem root@${{ secrets.DEV_HOST }} "
             cd /home/saas_builder &&
-            git pull --no-rebase origin droplet-deploy &&
+            git fetch origin droplet-deploy &&
+            git reset --hard origin/droplet-deploy &&
             docker compose down &&
             docker compose up -d --build
           "
