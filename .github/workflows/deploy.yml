@@ -1,0 +1,40 @@
+name: Deploy SaaS Builder
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to Dev Server
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem root@${{ secrets.DEV_HOST }} "
+            cd /home/saas_builder &&
+            git pull origin dev &&
+            docker compose down &&
+            docker compose up -d --build
+          "
+
+      - name: Deploy to Prod Server
+        if: github.ref == 'refs/heads/main'
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem root@${{ secrets.PROD_HOST }} "
+            cd /home/saas_builder &&
+            git pull origin main &&
+            docker compose down &&
+            docker compose up -d --build
+          "
