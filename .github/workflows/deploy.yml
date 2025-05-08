@@ -20,7 +20,7 @@ jobs:
           chmod 600 key.pem
 
       - name: Deploy to Dev Server
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/dev_branch'
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem root@${{ secrets.DEV_HOST }} "
             cd /home/saas_builder &&
