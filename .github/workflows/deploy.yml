@@ -3,7 +3,7 @@ name: Deploy SaaS Builder
 on:
   push:
     branches:
-      - dev
+      - dev_branch
       - main
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem root@${{ secrets.DEV_HOST }} "
             cd /home/saas_builder &&
-            git pull origin dev &&
+            git pull origin dev_branch &&
             docker compose down &&
             docker compose up -d --build
           "
