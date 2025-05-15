@@ -1,0 +1,395 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css";
+
+/* ✅ Conteneur de la sidebar */
+.sidebar {
+    width: 280px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 17px;
+    gap: 7px;
+    height: 97vh;
+    margin-left: 20px;
+}
+
+/* ✅ Logo */
+.logo {
+    width: 50px;
+}
+
+.create-agent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px; /* espace entre le bouton et le texte */
+    margin-left: 64px;
+    padding-bottom: 12px; /* espace entre ce bloc et les avatars */
+}
+.create-agent-text {
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 13px;
+    text-align: center;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ✅ Cercle avec "+" */
+.create-agent-circle {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.create-agent-circle:hover {
+    transform: scale(1.1);
+}
+
+/* ✅ Texte "CREATE AGENT" */
+.create-agent {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* ✅ Liste des agents */
+.agents-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 58px;
+        height: 62%;
+        width: 73%;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        position: relative;
+        padding: 15px;
+        margin-left: 65px;
+}
+
+/* ✅ Masquer la scrollbar pour Chrome/Safari */
+.agents-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* ✅ Cartes des agents */
+.agent-card {
+   position: relative;
+    border-radius: 17px;
+    width: 132px;
+    height: 132px;
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+.agent-name {
+    text-transform: uppercase;
+  }
+  
+  .agent-function {
+    text-transform: uppercase;
+  }
+  
+.agent-name,
+.agent-function {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+.agent-card.selected .agent-overlay {
+    background: rgba(128, 128, 128, 0.7); /* Gris translucide si sélectionné */
+  }
+  
+
+
+.agent-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* ✅ Avatar */
+.agent-avatar {
+    width: 107%;
+    height: 139%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+/* ✅ Ajustement de l’overlay */
+.agent-overlay {
+position: absolute;
+    bottom: 0;
+    width: 107%;
+    height: 36%;
+    background: rgba(0, 0, 0, .7);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20;
+    margin-bottom: -28px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 9px;
+}
+
+.overlay-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -18px;
+}
+
+.agent-name {
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 2px;
+}
+
+/* ✅ Nouveau bouton de suppression */
+.delete-agent {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: rgba(255, 77, 77, 0.9);
+    border: none;
+    color: white;
+    font-size: 12px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+.agent-card:hover .delete-agent {
+    opacity: 1;
+    transform: scale(1.1);
+}
+.delete-agent:hover {
+    background-color: darkred;
+    transform: scale(1.2);
+}
+
+/* ✅ Section Account */
+.account-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    padding: 5px;
+    width: 11%;
+    font-size: 13px;
+}
+
+.agent-function {
+    font-size: 9px;
+    color: #ccc;
+}
+
+/* ✅ Icône paramètres */
+.settings-icon {
+    font-size: 17px;
+    color: gray;
+    cursor: pointer;
+}
+
+/* ✅ Style du Pop-up */
+.delete-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* ✅ Conteneur du pop-up */
+.popup-container {
+    background: rgba(20, 20, 20, 0.98);
+    padding: 25px;
+    border-radius: 14px;
+    width: 380px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ✅ En-tête du pop-up */
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Icône d’avertissement */
+.warning-icon {
+    color: #ffcc00;
+    font-size: 22px;
+}
+
+/* ✅ Titre */
+.popup-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* ✅ Message */
+.popup-message {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* ✅ Boutons */
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ✅ Bouton Supprimer */
+.confirm-delete {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #f8ff00;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.confirm-delete:hover {
+    background: #e5e600;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Bouton Annuler */
+.cancel-delete {
+    background: #444;
+    color: white;
+    padding: 6px 18px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.cancel-delete:hover {
+    background: #666;
+    transform: scale(1.05);
+}
+
+/* ✅ Animation d’apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* 💎 Design pro et futuriste */
+.swal2-popup.custom-toast {
+    border-radius: 10px !important;
+    padding: 15px !important;
+    box-shadow: 0 4px 15px rgba(255, 221, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  /* ✅ Ajout d'une bordure subtile */
+  .swal2-popup {
+    border: 1px solid rgba(255, 221, 0, 0.3);
+  }
+  
+  /* Animation d’apparition */
+  .swal2-popup {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .spinner {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #ffff00;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .confirm-delete span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

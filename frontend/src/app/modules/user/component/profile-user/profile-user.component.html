@@ -1,0 +1,132 @@
+<div class="account-container">
+    <app-sidebar class="sidebar" style="margin-left: -113px;"></app-sidebar>
+    <div class="vertical-divider"></div>
+
+    <div class="account-content">
+      <div class="image-container">
+        <img src="assets/photo.png" alt="User Photo" class="user-photo">
+      </div>
+  
+      <div class="account-details">
+        <button class="logout-btn" (click)="logout()"><i class="fas fa-power-off"></i></button>
+  
+        <h2 class="account-title">{{ userData.firstName }} {{ userData.lastName }}</h2>
+        <p class="account-email">{{ userData.email }}</p>
+        <p class="account-phone">{{ userData.phoneNumber }}</p>
+  
+        <hr class="separator">
+  
+        <div class="icons-container">
+          <button class="icon-btn"><i class="fas fa-user"></i></button>
+          <button class="icon-btn"><i class="fas fa-crown"></i></button>
+          <button class="icon-btn"><i class="fas fa-cog"></i></button>
+          <button class="icon-btn"><i class="fas fa-credit-card"></i></button>
+        </div>
+  
+        <!-- ✅ Formulaire Angular -->
+        <form #profileForm="ngForm" (ngSubmit)="updateProfile()" novalidate>
+          <div class="account-info">
+            <div style="display: flex; gap: 10px;">
+              <div style="flex: 1; margin-right: 24px;">
+                <label>First Name</label>
+                <input type="text"
+                       class="input-field"
+                       name="firstName"
+                       [(ngModel)]="userData.firstName"
+                       placeholder="Enter your first name"
+                       pattern="^[a-zA-Z0-9\s]*$"
+                       required
+                       #firstNameInput="ngModel">
+                <small class="text-danger" *ngIf="firstNameInput.invalid && firstNameInput.touched">
+                  Only letters and numbers allowed.
+                </small>
+              </div>
+  
+              <div style="flex: 1; margin-right: 24px;">
+                <label>Last Name</label>
+                <input type="text"
+                       class="input-field"
+                       name="lastName"
+                       [(ngModel)]="userData.lastName"
+                       placeholder="Enter your last name"
+                       pattern="^[a-zA-Z0-9\s]*$"
+                       required
+                       #lastNameInput="ngModel">
+                <small class="text-danger" *ngIf="lastNameInput.invalid && lastNameInput.touched">
+                  Only letters and numbers allowed.
+                </small>
+              </div>
+            </div>
+  
+            <label>Mail</label>
+            <input type="email"
+                   class="input-field"
+                   name="email"
+                   [(ngModel)]="userData.email"
+                   disabled
+                   placeholder="Enter your email">
+  
+            <label>Numéro de téléphone</label>
+            <input type="tel"
+            class="input-field"
+            name="phoneNumber"
+            [(ngModel)]="userData.phoneNumber"
+            placeholder="Enter your phone number"
+            pattern="^[0-9]{8,9}$"
+            maxlength="9"
+            #phoneInput="ngModel"
+            required>
+     <small class="text-danger" *ngIf="phoneInput.errors?.['required'] && phoneInput.touched">
+       Phone number is required.
+     </small>
+     <small class="text-danger" *ngIf="phoneInput.errors?.['pattern'] && phoneInput.touched">
+       Numbers only (8 to 9 digits).
+     </small>
+     
+  
+            <label>Adresse</label>
+            <input type="text"
+                   class="input-field"
+                   name="address"
+                   [(ngModel)]="userData.address"
+                   placeholder="Enter your address">
+  
+            <label>Code Postal</label>
+            <input type="text"
+       class="input-field"
+       name="codePostal"
+       [(ngModel)]="userData.codePostal"
+       placeholder="Enter your postal code"
+       pattern="^[0-9]{4}$"
+       maxlength="4"
+       #postalInput="ngModel"
+       required>
+<small class="text-danger" *ngIf="postalInput.errors?.['required'] && postalInput.touched">
+  Postal code is required.
+</small>
+<small class="text-danger" *ngIf="postalInput.errors?.['pattern'] && postalInput.touched">
+  Only 4-digit numbers allowed.
+</small>
+
+  
+            <label>Pays</label>
+            <input type="text"
+                   class="input-field"
+                   name="pays"
+                   [(ngModel)]="userData.pays"
+                   placeholder="Enter your country" 
+                   style="width: 60%;">
+          </div>
+  
+          <!-- ✅ Bouton de sauvegarde désactivé si invalid -->
+          <button class="save-btn" type="submit" [disabled]="loading || !profileForm.valid">
+            <span *ngIf="!loading">SAVE</span>
+            <span *ngIf="loading">
+              <div class="spinner"></div> Saving...
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

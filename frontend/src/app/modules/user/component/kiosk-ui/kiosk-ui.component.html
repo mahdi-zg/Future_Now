@@ -1,0 +1,126 @@
+<div class="ui-container">
+
+  <div class="avatar-chat-container">
+
+    <!-- ✅ Avatar toujours affiché -->
+    <div class="avatar">
+        <!-- ✅ Overlay de création -->
+<div class="creating-overlay" *ngIf="isCreateMode">
+<div class="creating-message">
+  <div class="spinner"></div>
+  <p>Creating in progress...</p>
+</div>
+</div>
+<div class="left-cards" *ngIf="hasRealCards()" #cardsWrapper>
+<div class="card-button" *ngFor="let card of displayedCards" (click)="handleCardClick(card)">
+  
+  <div class="card-image">
+    <img [src]="card.image || 'assets/Future_Store12.png'" alt="card icon" />
+  </div>
+  
+  <div class="card-content">
+    {{ card.title }}
+  </div>
+  
+</div>
+</div>
+
+
+
+
+<ng-container *ngIf="modelPath">
+  <app-avatar
+    [backgroundColor]="backgroundColor"
+    [modelPath]="modelPath">
+  </app-avatar>
+</ng-container>
+
+
+      <!-- ✅ Tout ce qui suit ne s'affiche QUE si un avatar est sélectionné -->
+      <ng-container *ngIf="selectedAvatar && !isCreateMode">
+
+        <!-- Bouton Fullscreen (à droite) -->
+        <div class="fullscreen-control">
+          <button class="control-btn fullscreen-btn" 
+          (click)="toggleFullScreen()" 
+          [disabled]="isCreateMode && !selectedAvatar"
+          title="Full Screen">
+    <i class="fas fa-expand"></i>
+  </button>
+  
+        </div>
+
+        <!-- Direct Mode & Mute (à gauche) -->
+        <div class="top-left-controls">
+          <button class="control-btn" 
+      (click)="toggleDirectMode()" 
+      [disabled]="isCreateMode && !selectedAvatar" 
+      title="Direct Mode">
+<i class="fas fa-bolt"></i>
+</button>
+
+<button class="control-btn" 
+      (click)="toggleMute()" 
+      [ngClass]="{'muted': isMuted}" 
+      [disabled]="isCreateMode && !selectedAvatar"
+      title="Mute">
+<i class="fas" [ngClass]="{'fa-volume-up': !isMuted, 'fa-volume-mute': isMuted}"></i>
+</button>
+
+        </div>
+
+        <!-- Messages du chat -->
+        <div class="conversation-container">
+          <div *ngFor="let msg of messages"
+               [ngStyle]="msg.from === 'user' ? {'background-color': '#ffffff', 'color': backgroundColor} : {}"
+               [ngClass]="msg.from === 'user' ? 'bg-user-message' : 'bg-bot-message'"
+               [class.fade-out]="msg.fadeOut"
+               class="chat-message">
+            {{ msg.text }}
+          </div>
+
+          <!-- "Typing..." -->
+          <div *ngIf="loading" class="text-white italic text-sm text-left">
+            Typing...
+          </div>
+        </div>
+
+        <!-- Input + boutons -->
+        <div class="chat-box-overlay">
+          <input #messageInput class="chat-input"
+     placeholder="Type your message..."
+     [disabled]="isCreateMode && !selectedAvatar"
+     (keydown.enter)="sendMessage(); messageInput.value=''" />
+
+<button (click)="sendMessage(); messageInput.value=''" 
+      class="send-button"
+      [disabled]="isCreateMode && !selectedAvatar">
+<fa-icon [icon]="faPaperPlane" size="lg"></fa-icon>
+</button>
+
+<button class="mic-button custom-mic"
+        [class.recording]="isRecording"
+        (mousedown)="handleMouseDown()"
+        (mouseup)="handleMouseUp()"
+        (mouseleave)="handleMouseLeave()"
+        [disabled]="isCreateMode && !selectedAvatar"
+        title="Hold to record">
+  <i class="fas fa-microphone"></i>
+  <span class="ripple" *ngIf="isRecording"></span>
+</button>
+
+
+        </div>
+
+        <!-- Animation typing -->
+        <div *ngIf="loading" class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+

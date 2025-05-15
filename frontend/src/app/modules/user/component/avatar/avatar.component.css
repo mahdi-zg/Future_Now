@@ -1,0 +1,8 @@
+canvas {
+    width: 110% !important;  /* ✅ Légèrement plus large */
+    height: 110% !important; /* ✅ Légèrement plus haut */
+    display: block;
+    object-fit: cover;
+    transform: translate(-3%, -3%); /* ✅ Déplace l'avatar à gauche et le monte légèrement */
+    border-radius: 20px;
+}
