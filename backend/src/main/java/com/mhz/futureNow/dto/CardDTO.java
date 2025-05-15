@@ -7,5 +7,5 @@ public class CardDTO {
     private String title;
     private String prompt;
     private String tags;
-    private String imageData;
+    private String imagePath;
 }

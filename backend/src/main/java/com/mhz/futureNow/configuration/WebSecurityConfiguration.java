@@ -1,5 +1,5 @@
 package com.mhz.futureNow.configuration;
-
+import org.springframework.security.config.Customizer;
 import com.mhz.futureNow.entity.UserRole;
 import com.mhz.futureNow.services.jwt.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +29,21 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers("/api/auth/**", "/api/stt/**", "/api/chat/**","/api/project/**").permitAll()
-                                .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name(), UserRole.SUPER_ADMIN.name())
-                                .requestMatchers("/api/user/**").hasAnyAuthority(UserRole.USER.name())
-                                .anyRequest().authenticated()
-                )
-                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    	http
+        .cors(Customizer.withDefaults()) // ✅ Nécessaire pour activer ton filtre CORS
+        .csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(request -> request
+            .requestMatchers("/api/auth/**", "/api/stt/**", "/api/chat/**", "/api/project/**").permitAll()
+            .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name(), UserRole.SUPER_ADMIN.name())
+            .requestMatchers("/api/user/**").hasAnyAuthority(UserRole.USER.name())
+            .anyRequest().authenticated()
+        )
+        .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authenticationProvider(authenticationProvider())
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    	return http.build();
+	}
 
     @Bean
     public PasswordEncoder passwordEncoder() {

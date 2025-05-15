@@ -30,7 +30,6 @@ public class User implements UserDetails {
     private String codePostal;
     private String pays;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Project> projects;

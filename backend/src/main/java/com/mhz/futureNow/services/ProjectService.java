@@ -3,7 +3,6 @@ package com.mhz.futureNow.services;
 
 import com.mhz.futureNow.dto.ProjectRequestDTO;
 import com.mhz.futureNow.dto.ProjectResponseDTO;
-import com.mhz.futureNow.entity.BrainType;
 import com.mhz.futureNow.entity.Project;
 import com.mhz.futureNow.entity.User;
 import com.mhz.futureNow.repository.ProjectRepository;
@@ -21,15 +20,11 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
 
-    private final OpenAiAssistantService openAiAssistantService;
-
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, RestTemplate restTemplate, OpenAiAssistantService openAiAssistantService) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, RestTemplate restTemplate) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.restTemplate = restTemplate;
-        this.openAiAssistantService = openAiAssistantService;
     }
-
 
     public Project createProject(ProjectRequestDTO projectRequestDTO, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -48,17 +43,13 @@ public class ProjectService {
         project.setCompanyName(projectRequestDTO.getCompanyName());
         project.setNativeLanguage(projectRequestDTO.getNativeLanguage());
         project.setBrainType(projectRequestDTO.getBrainType());
-        project.setBrainType(projectRequestDTO.getBrainType());
         project.setLogo(projectRequestDTO.getLogo()); // ✅ Stocke le chemin de l'avatar
         project.setInstructions(projectRequestDTO.getInstructions());
         project.setVoice(projectRequestDTO.getVoice());
         project.setPrompt(generatedPrompt); // ✅ Stockage du prompt généré
         project.setColorBackground(projectRequestDTO.getColorBackground()); // ✅ Stockage de la couleur
         project.setUser(user);
-        if (projectRequestDTO.getBrainType() == BrainType.ASSISTANT) {
-            String assistantId = openAiAssistantService.createAssistant(project.getName(), generatedPrompt);
-            project.setAssistantId(assistantId);
-        }
+
         return projectRepository.save(project);
     }
     private String generatePrompt(ProjectRequestDTO projectDTO) {
@@ -69,7 +60,7 @@ public class ProjectService {
                 ? projectDTO.getNativeLanguage()
                 : "English";
 
-        return "You are a " + gender + " " + function + " named " + name + ". Reply with JSON array.\n" +
+        return "You are a " + gender + " " + function.toLowerCase() + " named " + name + ". Reply with JSON array.\n" +
                 "Each message should be short (max 20 words per message).\n" +
                 "If the response is long, break it into multiple short messages.\n" +
                 "Each message includes: text, facialExpression (smile, serious, thoughtful), animation (Idle, Talking-1, Talking).\n" +
@@ -116,8 +107,7 @@ public class ProjectService {
                 project.getLogo(),
                 project.getInstructions(),
                 project.getColorBackground(),
-                project.getBrainType().name(),
-                project.getAssistantId()
+                project.getBrainType().name()
         );
     }
 
@@ -137,8 +127,7 @@ public class ProjectService {
                 project.getLogo(),
                 project.getInstructions(),  // ✅ Ajout des instructions
                 project.getColorBackground(),
-                project.getBrainType().name(),     // ✅ Ajout du brainType
-                project.getAssistantId()
+                project.getBrainType().name()     // ✅ Ajout du brainType
         )).collect(Collectors.toList());
     }
 
@@ -172,17 +161,6 @@ public class ProjectService {
         // ✅ Toujours régénérer le prompt automatiquement
         String updatedPrompt = generatePrompt(projectDTO);
         project.setPrompt(updatedPrompt);
-
-        // ✅ Si brainType devient ASSISTANT et qu’il n’y a pas encore d’assistantId => on le génère
-        if (projectDTO.getBrainType() == BrainType.ASSISTANT && (project.getAssistantId() == null || project.getAssistantId().isEmpty())) {
-            String assistantId = openAiAssistantService.createAssistant(project.getName(), updatedPrompt);
-            project.setAssistantId(assistantId);
-        }
-
-        // ✅ Sinon, si on redescend en niveau (ex: CHATGPT), on peut supprimer l'ancien assistantId
-        else if (projectDTO.getBrainType() != BrainType.ASSISTANT) {
-            project.setAssistantId(null); // facultatif mais propre
-        }
 
         return projectRepository.save(project);
     }

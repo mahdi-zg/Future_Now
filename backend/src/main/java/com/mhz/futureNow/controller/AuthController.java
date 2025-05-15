@@ -9,7 +9,6 @@ import com.mhz.futureNow.repository.UserRepository;
 import com.mhz.futureNow.services.AuthService;
 import com.mhz.futureNow.services.jwt.UserService;
 import com.mhz.futureNow.utils.JWTUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -76,50 +73,16 @@ public class AuthController {
         Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
 
         final String jwt = jwtUtil.generateToken(userDetails);
-        final String refreshToken = jwtUtil.generateRefreshToken(new HashMap<>(), userDetails);
-
 
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 
         if (optionalUser.isPresent()) {
             authenticationResponse.setJwt(jwt);
-            authenticationResponse.setRefreshToken(refreshToken);
             authenticationResponse.setUserId(optionalUser.get().getId());
             authenticationResponse.setUserRole(String.valueOf(optionalUser.get().getUserRole()));
         }
 
         return authenticationResponse;
     }
-
-    @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        final String refreshToken;
-        final String userEmail;
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing or invalid refresh token");
-        }
-
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtUtil.extractUserName(refreshToken);
-
-        UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
-
-        if (!jwtUtil.isTokenValid(refreshToken, userDetails)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid refresh token");
-        }
-
-        String newAccessToken = jwtUtil.generateToken(userDetails);
-
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setJwt(newAccessToken);
-        response.setRefreshToken(refreshToken); // On réutilise le même refreshToken (ou en régénère un nouveau si tu veux)
-
-        return ResponseEntity.ok(response);
-    }
-
-
-
 
 }

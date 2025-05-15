@@ -17,10 +17,10 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
     @Column(name = "fonction")  // <-- corrige ici
     private String function;
-    private String assistantId;
-    private String name;
     private String description;
     private String nativeLanguage;
     private String companyName;
@@ -34,7 +34,6 @@ public class Project {
     private String logo;
     private String watermark;
 
-    @Enumerated(EnumType.STRING)
     private BrainType brainType;
     private String instructions;
     private String knowledges;
@@ -47,7 +46,6 @@ public class Project {
     private String googleVoiceApiKey;
     private String voice;
 
-    @Enumerated(EnumType.STRING)
     private RenderMode renderMode;
     private boolean showCards;
     private String weblink;

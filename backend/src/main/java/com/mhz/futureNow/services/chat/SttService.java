@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -20,8 +21,11 @@ public class SttService {
 
     public SttService() throws IOException {
         if (!Files.exists(uploadsDir)) Files.createDirectories(uploadsDir);
+        System.out.println("📦 GOOGLE CREDENTIALS FOUND? " + Files.exists(Paths.get("/app/config/google-credentials.json")));
+
         this.credentials = GoogleCredentials.fromStream(
-                new ClassPathResource("config/google-credentials.json").getInputStream());
+                new FileInputStream("/app/config/google-credentials.json")
+        );
         this.settings = SpeechSettings.newBuilder()
                 .setCredentialsProvider(() -> credentials)
                 .build();

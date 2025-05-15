@@ -1,6 +1,5 @@
 package com.mhz.futureNow.controller;
 
-import com.mhz.futureNow.dto.AvatarDTO;
 import com.mhz.futureNow.dto.ProjectRequestDTO;
 import com.mhz.futureNow.dto.ProjectResponseDTO;
 import com.mhz.futureNow.dto.UsersDto;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -70,23 +68,6 @@ public class UserController {
                     .body(Collections.singletonMap("error", "Erreur lors de la suppression du projet"));
         }
     }
-    @GetMapping("/avatars/{userId}")
-    public ResponseEntity<List<AvatarDTO>> getUserAvatars(@PathVariable Long userId) {
-        List<ProjectResponseDTO> projects = projectService.getProjectsByUserId(userId);
-        List<AvatarDTO> avatars = projects.stream()
-                .map(project -> new AvatarDTO(
-                        project.getName(),
-                        project.getFunction(),
-                        project.getLogo(),
-                        project.getColorBackground(),
-                        project.getId() // ✅ Ajout du projectId
-                ))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(avatars);
-    }
-
-
     @PutMapping("/updateProject/{projectId}")
     public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody ProjectRequestDTO projectDTO) {
         Project updatedProject = projectService.updateProject(projectId, projectDTO);

@@ -9,7 +9,6 @@ import com.mhz.futureNow.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -28,9 +27,7 @@ public class CardService {
             card.setTitle(dto.getTitle());
             card.setPrompt(dto.getPrompt());
             card.setTags(dto.getTags());
-            if (dto.getImageData() != null) {
-                card.setImageData(Base64.getDecoder().decode(dto.getImageData()));
-            }
+            card.setImagePath(dto.getImagePath());
             card.setProject(project);
             return card;
         }).toList();
@@ -50,9 +47,8 @@ public class CardService {
         card.setTitle(cardDTO.getTitle());
         card.setPrompt(cardDTO.getPrompt());
         card.setTags(cardDTO.getTags());
-        if (cardDTO.getImageData() != null) {
-            card.setImageData(Base64.getDecoder().decode(cardDTO.getImageData()));
-        }
+        card.setImagePath(cardDTO.getImagePath());
+
         return toDTO(cardRepository.save(card));
     }
 
@@ -63,26 +59,14 @@ public class CardService {
         cardRepository.deleteById(cardId);
     }
 
-    public Card saveCard(Card card) {
-        return cardRepository.save(card);
-    }
-
-    public CardResponseDTO toDTO(Card card) {
-        String base64Image = null;
-        if (card.getImageData() != null) {
-            base64Image = Base64.getEncoder().encodeToString(card.getImageData());
-        }
+    private CardResponseDTO toDTO(Card card) {
         return new CardResponseDTO(
                 card.getId(),
                 card.getTitle(),
                 card.getPrompt(),
                 card.getTags(),
-                base64Image, // ✅ pas card.getImageData() directement
+                card.getImagePath(),
                 card.getProject().getId()
         );
     }
-
-
-
-
 }

@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.Map;
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "${allowed.origin}")
 @RequestMapping("/api")
 public class ChatController {
 

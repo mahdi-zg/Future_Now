@@ -15,9 +15,7 @@ public class Card {
     private String title;
     private String prompt;
     private String tags;
-    @Lob
-    @Column(name = "image_data", columnDefinition = "LONGBLOB")
-    private byte[] imageData;
+    private String imagePath; // 🔥 Chemin de l'image (ex: assets/cards/image1.png)
 
     @ManyToOne
     @JoinColumn(name = "project_id")

@@ -4,7 +4,6 @@ package com.mhz.futureNow.services.chat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mhz.futureNow.dto.ProjectResponseDTO;
 import com.mhz.futureNow.services.ProjectService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -38,107 +37,11 @@ public class ChatService {
             throw new RuntimeException("Could not create audios directory", e);
         }
     }
-    private Map<String, Object> callOpenAiAssistantV2(String assistantId, String userMessage, Long projectId) throws Exception {
-        // 🔹 Créer un thread
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(openaiApiKey);
-        headers.add("OpenAI-Beta", "assistants=v2");
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        Map<String, Object> threadRequest = new HashMap<>();
-        HttpEntity<Map<String, Object>> threadEntity = new HttpEntity<>(threadRequest, headers);
-        ResponseEntity<String> threadResponse = restTemplate.postForEntity("https://api.openai.com/v1/threads", threadEntity, String.class);
-        String threadId = new ObjectMapper().readTree(threadResponse.getBody()).get("id").asText();
-
-        // 🔹 Ajouter le message dans le thread
-        Map<String, String> msgBody = Map.of("role", "user", "content", userMessage);
-        HttpEntity<Map<String, String>> msgEntity = new HttpEntity<>(msgBody, headers);
-        restTemplate.postForEntity("https://api.openai.com/v1/threads/" + threadId + "/messages", msgEntity, String.class);
-
-        // 🔹 Lancer le run
-        Map<String, String> runBody = Map.of("assistant_id", assistantId);
-        HttpEntity<Map<String, String>> runEntity = new HttpEntity<>(runBody, headers);
-        ResponseEntity<String> runResponse = restTemplate.postForEntity("https://api.openai.com/v1/threads/" + threadId + "/runs", runEntity, String.class);
-        String runId = new ObjectMapper().readTree(runResponse.getBody()).get("id").asText();
-
-        // 🔄 Attendre que le run se termine
-        String status = "queued";
-        while (!status.equals("completed")) {
-            Thread.sleep(1000);
-            HttpEntity<Void> getRunEntity = new HttpEntity<>(headers);
-            ResponseEntity<String> runStatusResp = restTemplate.exchange(
-                    "https://api.openai.com/v1/threads/" + threadId + "/runs/" + runId,
-                    HttpMethod.GET,
-                    getRunEntity,
-                    String.class
-            );
-            status = new ObjectMapper().readTree(runStatusResp.getBody()).get("status").asText();
-        }
-
-        HttpEntity<Void> getMessagesEntity = new HttpEntity<>(headers);
-        ResponseEntity<String> messagesResp = restTemplate.exchange(
-                "https://api.openai.com/v1/threads/" + threadId + "/messages",
-                HttpMethod.GET,
-                getMessagesEntity,
-                String.class
-        );
-        String responseText = new ObjectMapper().readTree(messagesResp.getBody())
-                .get("data").get(0).get("content").get(0).get("text").get("value").asText();
-
-        // ✅ Vérifier si c’est un tableau JSON stringifié ou un simple texte
-        List<Map<String, Object>> parsedMessages;
-        try {
-            parsedMessages = mapper.readValue(responseText, new TypeReference<>() {});
-        } catch (Exception e) {
-            parsedMessages = List.of(Map.of(
-                    "text", responseText,
-                    "facialExpression", "smile",
-                    "animation", "Talking"
-            ));
-        }
-
-        // 🔊 Générer audio + lipsync
-        List<Map<String, Object>> finalMessages = new ArrayList<>();
-        for (int i = 0; i < parsedMessages.size(); i++) {
-            Map<String, Object> msg = parsedMessages.get(i);
-            String text = (String) msg.get("text");
-
-            Path mp3 = audiosDir.resolve("message_" + i + ".mp3");
-            Path wav = audiosDir.resolve("message_" + i + ".wav");
-            Path json = audiosDir.resolve("message_" + i + ".json");
-
-            generateTTS(text, mp3, projectId);
-            runFfmpeg(mp3, wav);
-            runRhubarb(wav, json);
-
-            msg.put("audio", base64Encode(mp3));
-            msg.put("lipsync", readJson(json));
-
-            finalMessages.add(msg);
-        }
-
-        Map<String, Object> finalResponse = new HashMap<>();
-        finalResponse.put("messages", finalMessages);
-        return finalResponse;
-    }
-
 
     public Map<String, Object> processChat(String userMessage, Long projectId) throws Exception {
-        ProjectResponseDTO project = projectService.getProjectById(projectId);
-
-        // 🔁 Choix du mode : Assistant V2 ou GPT classique
-        if (project.getBrainType().equalsIgnoreCase("ASSISTANT")) {
-            if (project.getAssistantId() == null || project.getAssistantId().isEmpty()) {
-                throw new RuntimeException("❌ Assistant ID manquant pour ce projet.");
-            }
-            return callOpenAiAssistantV2(project.getAssistantId(), userMessage, projectId);
-        }
-
-        // 🔁 Sinon, GPT classique
-        String dynamicPrompt = project.getPrompt();
+        String dynamicPrompt = projectService.getProjectById(projectId).getPrompt();
         List<Map<String, Object>> messages = callChatGPT(userMessage, dynamicPrompt);
 
-        // 🔊 TTS + lipsync
         List<CompletableFuture<Void>> tasks = new ArrayList<>();
         for (int i = 0; i < messages.size(); i++) {
             int index = i;
@@ -172,7 +75,6 @@ public class ChatService {
         result.put("messages", messages);
         return result;
     }
-
 
     public List<Map<String, Object>> callChatGPT(String userMessage, String prompt) throws IOException {
         Map<String, Object> requestBody = new HashMap<>();
@@ -252,7 +154,7 @@ public class ChatService {
     }
 
     private void runRhubarb(Path wavFile, Path jsonFile) throws Exception {
-        Path rhubarbExe = Paths.get("bin", "Rhubarb.exe");
+        Path rhubarbExe = Paths.get("bin", "rhubarb");
         ProcessBuilder pb = new ProcessBuilder(
                 rhubarbExe.toAbsolutePath().toString(),
                 "-f", "json",

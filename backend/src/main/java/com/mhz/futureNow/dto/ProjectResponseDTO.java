@@ -19,15 +19,13 @@ public class ProjectResponseDTO {
     private Long userId;
     private String logo;
     private String instructions;
-    private String colorBackground;
-    private String brainType;
-    private String assistantId; // ✅ AJOUT ICI
+    private String colorBackground; // ✅ DOIT venir avant
+    private String brainType;       // ✅ DOIT venir après
 
     public ProjectResponseDTO(Long id, String name, String function, String description,
                               String nativeLanguage, String companyName, String prompt,
                               String voice, Long userId, String logo,
-                              String instructions, String colorBackground,
-                              String brainType, String assistantId) {
+                              String instructions, String colorBackground, String brainType) {
         this.id = id;
         this.name = name;
         this.function = function;
@@ -41,6 +39,6 @@ public class ProjectResponseDTO {
         this.instructions = instructions;
         this.colorBackground = colorBackground;
         this.brainType = brainType;
-        this.assistantId = assistantId; // ✅ AJOUT ICI
     }
 }
+

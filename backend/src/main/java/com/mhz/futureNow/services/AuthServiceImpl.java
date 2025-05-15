@@ -52,15 +52,15 @@ public class AuthServiceImpl implements AuthService {
         // 🔥 Créer un projet par défaut pour ce nouvel utilisateur
         ProjectRequestDTO defaultProject = new ProjectRequestDTO();
         defaultProject.setName("My First AI");
-        defaultProject.setFunction("Consultant"); // ✅ transmis depuis le formulaire
+        defaultProject.setFunction("Virtual Assistant");
         defaultProject.setDescription("Default project created on signup");
         defaultProject.setCompanyName("Default Company");
         defaultProject.setNativeLanguage("English");
         defaultProject.setBrainType(BrainType.CHATGPT); // à adapter selon ton enum
         defaultProject.setLogo("assets/doctor.png"); // logo par défaut
         defaultProject.setInstructions("Feel free to ask anything!");
-        defaultProject.setVoice("onyx"); // une voix féminine par défaut
-        defaultProject.setColorBackground("#b0c4de"); // fond blanc
+        defaultProject.setVoice("nova"); // une voix féminine par défaut
+        defaultProject.setColorBackground("#0a1f44"); // fond blanc
         defaultProject.setCalmness(5);
         defaultProject.setCuriosity(5);
         defaultProject.setEnthusiasm(5);
