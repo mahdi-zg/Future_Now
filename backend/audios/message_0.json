@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\MSI\\Desktop\\Projet_Final\\backend\\audios\\message_0.wav",
+    "duration": 1.96
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.03, "value": "X" },
+    { "start": 0.03, "end": 0.09, "value": "B" },
+    { "start": 0.09, "end": 0.28, "value": "E" },
+    { "start": 0.28, "end": 0.42, "value": "F" },
+    { "start": 0.42, "end": 0.62, "value": "B" },
+    { "start": 0.62, "end": 0.96, "value": "F" },
+    { "start": 0.96, "end": 1.45, "value": "B" },
+    { "start": 1.45, "end": 1.66, "value": "C" },
+    { "start": 1.66, "end": 1.96, "value": "X" }
+  ]
+}
