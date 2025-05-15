@@ -427,8 +427,8 @@ if (matchedVoice) {
       this.isEditingProject = true;
       this.isCreateMode = false;
 
-      this.fullScreenUrl = `http://localhost:4200/fullscreen/${project.id}`;
-      this.androidAppUrl = `http://localhost:4200/android/${project.id}`;
+      this.fullScreenUrl = `https://api.saasbuilder.future-now.ai/${project.id}`;
+      this.androidAppUrl = `https://api.saasbuilder.future-now.ai/${project.id}`;
       // 🚫 On ignore le chargement des cartes depuis le backend pour les tests
       this.profileService.getCardsByProject(project.id).subscribe({
         next: (cardsFromApi) => {
